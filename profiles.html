@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Profiles</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9f3ff; /* Light blue background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        h1 {
+            color: #0073e6; /* Bright blue heading */
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .faculty-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+        .faculty-card {
+            background-color: #ffffff; /* White background for cards */
+            border: 1px solid #0073e6; /* Border color matches the theme */
+            border-radius: 10px;
+            width: 220px;
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .faculty-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid #005bb5; /* Darker border on hover */
+        }
+        .faculty-card h2 {
+            margin: 10px 0;
+            color: #333; /* Darker text color for names */
+        }
+        .profile-details {
+            display: none;
+            background-color: #ffffff;
+            border: 1px solid #0073e6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 80%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease;
+        }
+        .rating-stars {
+            margin: 10px 0;
+            font-size: 24px;
+            color: #ddd;
+        }
+        .rating-stars span {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .rating-stars span:hover, .rating-stars span.active {
+            color: #ffcc00; /* Gold color for selected stars */
+        }
+        .submit-rating {
+            background-color: #0073e6; /* Bright blue button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .submit-rating:hover {
+            background-color: #005bb5; /* Darker blue on hover */
+        }
+        .feedback-button {
+            background-color: #28a745; /* Green button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none; /* Remove underline from anchor */
+            transition: background-color 0.3s ease;
+        }
+        .feedback-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        @media (max-width: 768px) {
+            .faculty-card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Faculty Profiles</h1>
+    <div class="faculty-container">
+        <!-- Faculty cards -->
+        <div class="faculty-card" onclick="showProfile('drSmith')">
+            <h2>Dr. Smith</h2>
+        </div>
+        <div class="faculty-card" onclick="showProfile('profJohnson')">
+            <h2>Prof. Johnson</h2>
+        </div>
+        <div class="faculty-card" onclick="showProfile('drLee')">
+            <h2>Dr. Lee</h2>
+        </div>
+        <div class="faculty-card" onclick="showProfile('profGarcia')">
+            <h2>Prof. Garcia</h2>
+        </div>
+        <div class="faculty-card" onclick="showProfile('drPatel')">
+            <h2>Dr. Patel</h2>
+        </div>
+    </div>
+
+    <!-- Profile details section -->
+    <div id="profile-details" class="profile-details">
+        <h2 id="profile-name"></h2>
+        <p id="profile-experience"></p>
+        <p id="profile-courses"></p>
+        <p id="profile-projects"></p>
+        <p id="profile-patents"></p>
+
+        <!-- Dynamic star rating -->
+        <div class="rating-stars">
+            <span id="star1" onclick="rate(1)">&#9733;</span>
+            <span id="star2" onclick="rate(2)">&#9733;</span>
+            <span id="star3" onclick="rate(3)">&#9733;</span>
+            <span id="star4" onclick="rate(4)">&#9733;</span>
+            <span id="star5" onclick="rate(5)">&#9733;</span>
+        </div>
+        <button class="submit-rating" onclick="submitRating()">Submit Rating</button>
+    </div>
+
+    <!-- Give Feedback Button -->
+    <a href="feedback.html" class="feedback-button">Give Feedback</a>
+
+    <script>
+        let currentRating = 0;
+        const profiles = {
+            drSmith: {
+                name: "Dr. Smith",
+                experience: "10 years of experience in machine learning and AI.",
+                courses: "Courses: AI Fundamentals, Machine Learning, Neural Networks.",
+                projects: "Projects: Developed AI-based healthcare systems.",
+                patents: "Patents: AI-driven diagnostic tools."
+            },
+            profJohnson: {
+                name: "Prof. Johnson",
+                experience: "7 years of experience in deep learning and computer vision.",
+                courses: "Courses: Deep Learning, Computer Vision, AI Ethics.",
+                projects: "Projects: Developed child prediction models using AI.",
+                patents: "Patents: Vision-based AI systems."
+            },
+            drLee: {
+                name: "Dr. Lee",
+                experience: "12 years of experience in machine learning and health tech.",
+                courses: "Courses: Data Science, HealthTech, AI for Medicine.",
+                projects: "Projects: Developed heart disease prediction using AI.",
+                patents: "Patents: Predictive healthcare AI systems."
+            },
+            profGarcia: {
+                name: "Prof. Garcia",
+                experience: "5 years of experience in web development and UI design.",
+                courses: "Courses: Web Development, UX/UI Design.",
+                projects: "Projects: Developed interactive web applications.",
+                patents: "Patents: Web-based collaboration platforms."
+            },
+            drPatel: {
+                name: "Dr. Patel",
+                experience: "8 years of experience in deep learning and social media analysis.",
+                courses: "Courses: Deep Learning, Social Media Analytics.",
+                projects: "Projects: Developed social media fake account detection systems.",
+                patents: "Patents: AI-based social media tools."
+            }
+        };
+
+        function showProfile(profileId) {
+            const profile = profiles[profileId];
+            document.getElementById('profile-name').textContent = profile.name;
+            document.getElementById('profile-experience').textContent = profile.experience;
+            document.getElementById('profile-courses').textContent = profile.courses;
+            document.getElementById('profile-projects').textContent = profile.projects;
+            document.getElementById('profile-patents').textContent = profile.patents;
+            document.getElementById('profile-details').style.display = 'block';
+            resetStars(); // Reset stars when showing a new profile
+        }
+
+        function rate(star) {
+            currentRating = star;
+            resetStars(); // Reset stars first
+            for (let i = 1; i <= star; i++) {
+                document.getElementById('star' + i).classList.add('active');
+            }
+        }
+
+        function resetStars() {
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('star' + i).classList.remove('active');
+            }
+        }
+
+        function submitRating() {
+            if (currentRating === 0) {
+                alert("Please select a rating before submitting.");
+            } else {
+                alert("You rated " + currentRating + " stars!");
+                // Here, you can send the rating to the server or
+
+                // Here, you can send the rating to the server or update the average rating dynamically
+            }
+        }
+    </script>
+
+</body>
+</html>

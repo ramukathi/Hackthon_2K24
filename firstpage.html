@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGM College Course Selection</title>
+    <link rel="stylesheet" href="firstpage.css">
+</head>
+<body>
+    <div class="marquee-container">
+        <marquee style="font-size: 36px; font-weight: bold;">RGM University, Nandyal</marquee>
+    </div>
+    
+
+    <div class="dashboard">
+        <h1>RGM College Course Selection System</h1>
+
+        <!-- Semester Selection -->
+        <div>
+            <label for="semester-dropdown"><strong>Select Semester</strong></label>
+            <select id="semester-dropdown">
+                <option value="" disabled selected>Select Semester</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+                
+            </select>
+        </div>
+
+        <div class="subject-dashboards">
+            <!-- Theory Subjects Dashboard -->
+            <div id="theory-dashboard" class="dashboard-section">
+                <h2>Theory Subjects</h2>
+                
+                <p id="theory-count">Selected Theory Subjects (0/4)</p> 
+                <ul id="selected-theory"></ul>
+                <select id="theory-dropdown" disabled>
+                    <option value="" disabled selected>Select Theory Subject</option>
+                </select>
+            </div>
+
+            <!-- Lab Subjects Dashboard -->
+            <div id="lab-dashboard" class="dashboard-section">
+                <h2>Lab Subjects</h2>
+                
+                <p id="lab-count">Selected Lab Subjects (0/2)</p> 
+                <ul id="selected-lab"></ul>
+                <select id="lab-dropdown" disabled>
+                    <option value="" disabled selected>Select Lab Subject</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Next Button -->
+         <br>
+         <br>
+        <button id="next-button" disabled>Next</button>
+    </div>
+
+    <script src="firstpage.js"></script>
+</body>
+</html>

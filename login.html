@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <link rel="stylesheet" href="login.css">
+    <style>
+        /* Add some basic styles for the login form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .login-heading {
+            text-align: center;
+            color: blue;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+        }
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-button:hover {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="login-heading">Student Details</h2>
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="student-id">Student ID:</label>
+                <input class="form-input" type="text" id="student-id" name="student-id" placeholder="Enter your Student ID" required>
+                <small class="error-message" id="studentIdError"></small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password:</label>
+                <input class="form-input" type="password" id="password" name="password" placeholder="Enter your Password" required>
+                <small class="error-message" id="passwordError"></small>
+            </div>
+
+            <button class="login-button" type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("loginForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                // Get the input values
+                const studentId = document.getElementById('student-id').value;
+                const password = document.getElementById('password').value;
+
+                // Clear previous error messages
+                document.getElementById('studentIdError').innerText = '';
+                document.getElementById('passwordError').innerText = '';
+
+                let isValid = true;
+
+                // Example valid credentials (change these as needed)
+                const validStudentId = "1234567890"; // Sample valid student ID
+                const validPassword = "Password@123"; // Sample valid password
+
+                // Validate Student ID
+                if (studentId.length < 10) {
+                    document.getElementById('studentIdError').innerText = 'Invalid ID';
+                    isValid = false;
+                }
+
+                // Validate Password
+                const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?/~`]).{8,}$/;
+                if (!passwordPattern.test(password)) {
+                    document.getElementById('passwordError').innerText = 'Invalid password';
+                    isValid = false;
+                }
+
+                // Check if the Student ID and Password match valid credentials
+                if (isValid && studentId === validStudentId && password === validPassword) {
+                    window.location.href = "firstpage.html"; // Redirect to firstpage.html
+                } else {
+                    if (isValid) {
+                        alert("Invalid Student ID or Password.");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

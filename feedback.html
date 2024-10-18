@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="feed.css">
+</head>
+<body>
+
+    <div class="feedback-form-container">
+        <h2>Professor Feedback Form</h2>
+        <form id="feedback-form">
+            <!-- Professor Name -->
+            <div class="form-group">
+                <label for="professor-name">Professor Name:</label>
+                <select id="professor-name" name="professor" required>
+                    <option value="" disabled selected>Select Professor</option>
+                    <option value="prof1">Dr. Clark</option>
+                    <option value="prof2">Prof. Lewis</option>
+                    <option value="prof3">Dr. Brown</option>
+                </select>
+            </div>
+
+            <!-- Rating -->
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <select id="rating" name="rating" required>
+                    <option value="" disabled selected>Select Rating</option>
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="5">5 - Excellent</option>
+                </select>
+            </div>
+
+            <!-- Comments -->
+            <div class="form-group">
+                <label for="comments">Comments:</label>
+                <textarea id="comments" name="comments" placeholder="Share your thoughts..." rows="4"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group submit-group">
+                <button type="submit">Submit Feedback</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="feed.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4a47a3;
+        }
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .faculty-button {
+            background-color: #4a47a3;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-decoration: none; /* Remove underline */
+            transition: background-color 0.3s ease;
+        }
+        .faculty-button:hover {
+            background-color: #3a3c7a; /* Darker shade on hover */
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px;
+        }
+        .subject-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        button {
+            background-color: #4a47a3;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3a3c7a; /* Darker shade on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <a href="profiles.html" class="faculty-button">Faculty Profiles</a>
+        </div>
+        <br>
+        <h1>Select Your Teachers</h1>    
+        <ul id="subject-list"></ul>
+        <button id="submit-button">Submit</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const subjectList = document.getElementById('subject-list');
+            const submitButton = document.getElementById('submit-button');
+
+            // Teachers for each subject
+            const teachersBySubject = {
+                "Applied Physics": ["Dr. Alice", "Dr. Bob"],
+                "Problem Solving Programming": ["Prof. Charlie", "Prof. David"],
+                "Basic Electrical Engineering": ["Dr. Emma", "Dr. Frank"],
+                "Engineering Drawing": ["Prof. Grace", "Prof. Henry"],
+                "Linear Algebra": ["Dr. Ivy", "Dr. Jack"],
+                "Data Structures": ["Dr. Quentin", "Prof. Rachel"],
+                "Engineering Chemistry": ["Dr. Sarah", "Prof. Tom"],
+                "Differentiation & Calculus": ["Prof. Uma", "Prof. Victor"],
+                "MFCS": ["Dr. Walter", "Dr. Xavier"],
+                "Engineering English": ["Prof. Yvonne", "Prof. Zach"],
+                "Probability & Statics": ["Dr. Adam", "Prof. Ben"],
+                "Python Programming": ["Dr. Henry", "Prof. Liam"],
+                "DBMS": ["Prof. Noah", "Prof. Olivia"],
+                "FLAT": ["Dr. Mark", "Prof. Nancy"],
+                "Business Environment": ["Dr. Oscar", "Prof. Peter"],
+                "Digital Logic Design": ["Dr. Quinn", "Prof. Rachel"],
+                "EMCS": ["Prof. Steve", "Prof. Tom"],
+                "Java Programming": ["Dr. Alice", "Prof. David"],
+                "ADSA": ["Dr. Emma", "Prof. Frank"],
+                "Management Science": ["Prof. Grace", "Dr. Henry"],
+                "AARC": ["Prof. Ivy", "Prof. Jack"],
+                "Operating System": ["Dr. Bob", "Prof. Charlie"],
+                "FSAD": ["Dr. Mia", "Prof. Noah"],
+                "EEA": ["Prof. Olivia", "Prof. Peter"],
+                "DVBA": ["Dr. Quentin", "Prof. Rachel"],
+                "IIIPM": ["Dr. Sarah", "Prof. Tom"],
+                "Computer Network": ["Prof. Uma", "Prof. Victor"],
+                "SEBA": ["Dr. Walter", "Dr. Xavier"],
+                "BDA": ["Dr. Adam", "Prof. Ben"],
+                "MR & MM": ["Dr. Henry", "Prof. Liam"],
+                "MLF": ["Prof. Ken", "Prof. Liam"],
+                "CS&CL": ["Dr. Mia", "Prof. Noah"],
+                "PM": ["Dr. Oscar", "Prof. Peter"],
+                "ITPM": ["Prof. Uma", "Prof. Victor"],
+                "RM&T": ["Dr. Walter", "Dr. Xavier"],
+                "Major Project": ["Dr. Alice", "Prof. Bob"],
+                "CSP": ["Prof. Charlie", "Prof. David"],
+                "Internship": ["Dr. Emma", "Prof. Frank"],
+                "BC&VS Lab": ["Prof. Grace", "Dr. Henry"],
+                "SDT Lab": ["Dr. Ivy", "Prof. Jack"],
+                "EP Lab": ["Dr. Mark", "Prof. Nancy"],
+                "Python Lab": ["Dr. Ramu", "Prof. Nagesh"],
+                "DBMS Lab": ["Dr. Mukesh", "Prof. Meenakshi"],
+                "USP Lab": ["Dr. Ranjith", "Prof. Nukara"],
+                "JP Lab": ["Prof. Nagesh", "Prof. Nushi"],
+                "ADSA Lab": ["Dr. venu", "Prof. Niharika"],
+                "WCS Lab": ["Dr. Moksha", "Dr. Ramu"],
+                "AWAD Lab": ["Prof. Nagesh", "Prof. Pleant"],
+                "DVBA Lab": ["Dr. Uma devi", "Prof. asha"],
+                "DELL Lab": ["Dr. muni", "Dr. Ramu"],
+                "EC Lab": ["Prof. Nagesh", "Prof. Nancy"],
+                "DS Lab": ["Prof. Nagesh", "Prof. Nunith"],
+                "PSP Lab": ["Dr. Lasya", "Dr. venu"],
+                "BDA Lab": ["Dr. Mark", "Dr. venu"],
+                "DLD Lab": ["Dr. Mark", "Dr. venu"],
+                "IT Lab": ["Dr. Markesh", "Prof. Hanisha"],
+            };
+
+            // Retrieve selected subjects from localStorage
+            const selectedSubjects = JSON.parse(localStorage.getItem('selectedSubjects'));
+
+            // Check if any subjects are selected
+            if (selectedSubjects && (selectedSubjects.theory.length > 0 || selectedSubjects.lab.length > 0)) {
+                // Display selected theory subjects
+                selectedSubjects.theory.forEach(subject => {
+                    let listItem = document.createElement('li');
+                    
+                    let subjectTitle = document.createElement('span');
+                    subjectTitle.className = 'subject-title';
+                    subjectTitle.innerText = subject;
+                    listItem.appendChild(subjectTitle);
+
+                    let teacherDropdown = document.createElement('select');
+                    // Populate the dropdown with teachers based on the subject
+                    if (teachersBySubject[subject]) {
+                        teachersBySubject[subject].forEach(teacher => {
+                            let option = document.createElement('option');
+                            option.value = teacher;
+                            option.innerText = teacher;
+                            teacherDropdown.appendChild(option);
+                        });
+                    }
+                    listItem.appendChild(teacherDropdown);
+                    subjectList.appendChild(listItem);
+                });
+
+                // Display selected lab subjects
+                selectedSubjects.lab.forEach(subject => {
+                    let listItem = document.createElement('li');
+                    
+                    let subjectTitle = document.createElement('span');
+                    subjectTitle.className = 'subject-title';
+                    subjectTitle.innerText = subject;
+                    listItem.appendChild(subjectTitle);
+
+                    let teacherDropdown = document.createElement('select');
+                    // Populate the dropdown with teachers based on the subject
+                    if (teachersBySubject[subject]) {
+                        teachersBySubject[subject].forEach(teacher => {
+                            let option = document.createElement('option');
+                            option.value = teacher;
+                            option.innerText = teacher;
+                            teacherDropdown.appendChild(option);
+                        });
+                    }
+                    listItem.appendChild(teacherDropdown);
+                    subjectList.appendChild(listItem);
+                });
+            } else {
+                // If no subjects were selected, show a message
+                subjectList.innerHTML = '<p>No subjects selected. Please go back and select subjects first.</p>';
+                submitButton.disabled = true; // Disable submit button if no subjects
+            }
+
+            // Event listener for the submit button
+            submitButton.addEventListener('click', () => {
+                const teacherAssignments = [];
+                const listItems = subjectList.getElementsByTagName('li');
+                
+                // Loop through all selected subjects and capture the teacher assignment
+                for (let i = 0; i < listItems.length; i++) {
+                    const teacherDropdown = listItems[i].getElementsByTagName('select')[0];
+                    const selectedTeacher = teacherDropdown.value;
+                    const subjectTitle = listItems[i].getElementsByClassName('subject-title')[0].innerText;
+
+                    teacherAssignments.push({ subject: subjectTitle, teacher: selectedTeacher });
+                }
+
+                // You can now do something with the teacherAssignments array, like sending it to a server or storing it
+                console.log(teacherAssignments);
+                alert("Teachers selected successfully!");
+            });
+        });
+    </script>
+</body>
+</html>
